@@ -18,6 +18,26 @@ int isEmpty(queueMobil Q){
 	return hasil;
 }//Kakak Tingkat
 
+//Alokasi Dinamis
+nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], char jenis_mobil[], int *jam,int *menit,int *detik){
+	
+	
+	elmt = (data_mobil *) malloc (sizeof(data_mobil));
+	if(elmt != NULL){
+	
+		elmt->no_pel = no_pel;fflush(stdin);
+		elmt->id_mobil = id_mobil;fflush(stdin);
+		elmt->jam_masuk.jam=jam;fflush(stdin);
+		elmt->jam_masuk.menit=menit;fflush(stdin);
+		elmt->jam_masuk.detik=detik;fflush(stdin);
+		elmt->jenis_mobil=jenis_mobil;fflush(stdin);
+		strcpy(elmt->nmor_polisi,nmor_polisi);fflush(stdin);
+		
+	}
+	
+	return elmt;
+	
+}
 
 //insert customer
 void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], char jenis_mobil[], queueMobil *Q, int *jam,int *menit,int *detik){          	
@@ -29,14 +49,8 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 		elmt->jam_operasi.detik = 0;
 	} 
 	
-	elmt = (data_mobil *) malloc (sizeof(data_mobil));
-	elmt->no_pel = no_pel;fflush(stdin);
-	elmt->id_mobil = id_mobil;fflush(stdin);
-	elmt->jam_masuk.jam=jam;fflush(stdin);
-	elmt->jam_masuk.menit=menit;fflush(stdin);
-	elmt->jam_masuk.detik=detik;fflush(stdin);
-	elmt->jenis_mobil=jenis_mobil;fflush(stdin);
-	strcpy(elmt->nmor_polisi,nmor_polisi);fflush(stdin);
+	//Alokasi Dinamis
+	elmt = Alokasi(no_pel, id_mobil, p_mobil, nmor_polisi, jenis_mobil, jam, menit, detik);
 	
 	if((*Q).front != NULL){ // kondisi pengambilan waktu ketika antrian sudah ada
 		if((*Q).rear==NULL){
