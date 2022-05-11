@@ -13,14 +13,15 @@ int main() {
 	createEmpty(&Q[1]);
 		
 	do{
+		int i;
 		system("cls");
 		printf("\n\n\n\n");
-		int i = 0;
-		printf("|=====================================|\n");
-		printf("|             Antrian cuci            |\n");
-		printf("|=====================================|\n");
+		i = 0;
+		gotoxy(40,3); printf("|=====================================|\n");
+		gotoxy(40,4); printf("|             Antrian cuci            |\n");
+		gotoxy(40,5); printf("|=====================================|\n");
 		while(i < 2){
-			printf("Tempat ke %d : ", i+1);
+			printf("|Tempat ke %d| : ", i+1);
 			printqueueMobil(Q[i]);
 			printf("\n");
 			i++;
@@ -33,7 +34,7 @@ int main() {
 				break;
 			}
 			case 2:{
-				checkout(&Q);
+				checkout(Q);
 				break;
 			}
 			case 3:{
@@ -54,4 +55,4 @@ int main() {
 		}
 		getch();
 	}while(choice !=5);	
-}//Nisrina dan Putri
+}/*Nisrina dan Putri*/
