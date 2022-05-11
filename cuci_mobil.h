@@ -7,6 +7,7 @@
 #include <conio.h>
 #include <time.h>
 #include <stdbool.h>
+#include <windows.h>
 #define panjang 600
 
 typedef struct{
@@ -45,31 +46,34 @@ typedef struct{
 time_t now;
 struct tm *now_tm;
 
-//membuat Queue kosong
+/*membuat Queue kosong*/
 void createEmpty(queueMobil *Q);
 
-//cek Queue kosong
+/*cek Queue kosong*/
 int isEmpty(queueMobil Q);
 
-//hitungelemen
+/*Alokasi Dinamis*/
+nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, int jam,int menit,int detik);
+
+/*hitungelemen*/
 int countMobil(queueMobil Q);
 
-//insert pembeli
-void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], char jenis_mobil[], queueMobil *Q,int *jam,int *menit,int *detik);
+/*insert pembeli*/
+void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, queueMobil *Q,int jam,int menit,int detik);
 
-//delete pembeli
+/*delete pembeli*/
 void delMobil(queueMobil *Q);
 
-//menampilkan isi Queue
+/*menampilkan isi Queue*/
 void printqueueMobil(queueMobil Q);
 
-//cek antrian
+/*cek antrian*/
 int cekAntrian(queueMobil Q[]);
 
-//tambah antrian
+/*tambah antrian*/
 void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]);
 
-//menu transaksi
+/*menu transaksi*/
 void mainmenu(int *pilih);
 
 int biayapakai (queueMobil *Q);
@@ -78,10 +82,14 @@ void printStruk (queueMobil *Q);
 
 void checkout (queueMobil *Q);
 
-//melihat keterangan setiap jenis mobil dalam waktu pelayanan
+void rekap();
+
+/*melihat keterangan setiap jenis mobil dalam waktu pelayanan*/
 void help();
 
-// menampilkan record file antrian cuci mobil
+/* menampilkan record file antrian cuci mobil*/
 void showrekap();
-#endif
 
+void gotoxy(int x, int y);
+
+#endif
