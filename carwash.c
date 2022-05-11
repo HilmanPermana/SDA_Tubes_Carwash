@@ -1,13 +1,13 @@
 #include "cuci_mobil.h"
 
-//membuat Queue kosong
+/*membuat Queue kosong*/
 void createEmpty(queueMobil *Q){
 	(*Q).front = NULL;
 	(*Q).rear = NULL;
-}//Kakak Tingkat
+}/*Kakak Tingkat*/
 
 
-//cek Queue kosong
+/*cek Queue kosong*/
 int isEmpty(queueMobil Q){
 	int hasil = 0;
 	
@@ -16,10 +16,9 @@ int isEmpty(queueMobil Q){
 	} 
 	
 	return hasil;
-}//Kakak Tingkat
+}/*Kakak Tingkat*/
 
-//Alokasi Dinamis
-nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], char jenis_mobil[], int *jam,int *menit,int *detik){
+nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, int jam,int menit,int detik){
 	
 	
 	elmt = (data_mobil *) malloc (sizeof(data_mobil));
@@ -37,22 +36,22 @@ nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[],
 	
 	return elmt;
 	
-}
+}/*Hilman*/
 
-//insert customer
-void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], char jenis_mobil[], queueMobil *Q, int *jam,int *menit,int *detik){          	
-	data_mobil *waktutemp;   // menambahkan pointer dengan nama waktu
+/*insert customer*/
+void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, queueMobil *Q, int jam,int menit,int detik){          	
+	data_mobil *waktutemp;   /* menambahkan pointer dengan nama waktu*/
 
-	if(jam <9){     //kondisi ketika tempat belum buka
+	/*if(jam <9){     //kondisi ketika tempat belum buka
 		elmt->jam_operasi.jam = 9;
 		elmt->jam_operasi.menit = 0;
 		elmt->jam_operasi.detik = 0;
-	} 
+	} */
 	
-	//Alokasi Dinamis
+	/*Alokasi Dinamis*/
 	elmt = Alokasi(no_pel, id_mobil, p_mobil, nmor_polisi, jenis_mobil, jam, menit, detik);
 	
-	if((*Q).front != NULL){ // kondisi pengambilan waktu ketika antrian sudah ada
+	if((*Q).front != NULL){ /* kondisi pengambilan waktu ketika antrian sudah ada*/
 		if((*Q).rear==NULL){
 			waktutemp=(*Q).front;
 		}
@@ -61,7 +60,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 			waktutemp=(*Q).rear;
 		}
 		if ((elmt->jam_masuk.jam>waktutemp->jam_keluar.jam)||((elmt->jam_masuk.jam==waktutemp->jam_keluar.jam)&& (elmt->jam_masuk.menit > waktutemp->jam_keluar.menit)) || ((elmt->jam_masuk.jam==waktutemp->jam_keluar.jam)&&(elmt->jam_masuk.menit==waktutemp->jam_keluar.menit)&&(elmt->jam_masuk.detik>waktutemp->jam_keluar.detik)))
-		{//kondisi ketika cucian sebelumnya selesai dikerjakan dan antrian sudah tidak ada
+		{/*kondisi ketika cucian sebelumnya selesai dikerjakan dan antrian sudah tidak ada*/
 			elmt->jam_operasi.jam=jam;
 			elmt->jam_operasi.menit=+5;
 			elmt->jam_operasi.detik=detik;
@@ -72,7 +71,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 		}
 		else
 		{	
-		  	if (waktutemp->jam_keluar.jam<17){ // prosedure untuk melakukan pengambilan waktu operasi ketika tempat belum tutup
+		  	if (waktutemp->jam_keluar.jam<16){ /* prosedure untuk melakukan pengambilan waktu operasi ketika tempat belum tutup*/
 				elmt->jam_operasi.jam=waktutemp->jam_keluar.jam;
 				elmt->jam_operasi.menit=waktutemp->jam_keluar.menit+5;
 				elmt->jam_operasi.detik=waktutemp->jam_keluar.detik;
@@ -82,13 +81,13 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 				}			
 		   	}
 	   		else{
-	   			printf("MAAF Tempat Sudah Penuh\n"); // kondisi antrian waktu sudah melebihi batas pengerjaan
+	   			printf("MAAF Tempat Sudah Tutup\n"); /* kondisi antrian waktu sudah melebihi batas pengerjaan*/
 			}
 		}
 		
 	}
 	else 	
-	if(jam>=12 && jam<13 && (*Q).front == NULL){  // kondisi ketika antrian kosong dan waktu pegawai untuk beristirahat
+	if(jam>=12 && jam<13 && (*Q).front == NULL){  /* kondisi ketika antrian kosong dan waktu pegawai untuk beristirahat*/
 		elmt->jam_operasi.jam = 13;
 		elmt->jam_operasi.menit = 00;
 		elmt->jam_operasi.detik = 00;
@@ -99,7 +98,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 		elmt->jam_operasi.detik= detik;	
 	}
 		
-	if(elmt->jenis_mobil==1){  // prosedure pengambilan waktu akhir ketika jenis mobil = A
+	if(elmt->jenis_mobil==1){  /* prosedure pengambilan waktu akhir ketika jenis mobil = A*/
 		elmt->jam_keluar.jam=elmt->jam_operasi.jam;
 		elmt->jam_keluar.menit=elmt->jam_operasi.menit+30;
 		elmt->jam_keluar.detik=elmt->jam_operasi.detik;
@@ -108,7 +107,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 			elmt->jam_keluar.jam=elmt->jam_keluar.jam+1;
 		}
 	}
-	if(elmt->jenis_mobil==2){ // prosedure pengambilan waktu akhir ketika jenis mobil = B
+	if(elmt->jenis_mobil==2){ /* prosedure pengambilan waktu akhir ketika jenis mobil = B*/
 		elmt->jam_keluar.jam=elmt->jam_operasi.jam;
 		elmt->jam_keluar.menit=elmt->jam_operasi.menit+45;
 		elmt->jam_keluar.detik=elmt->jam_operasi.detik;
@@ -117,7 +116,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 			elmt->jam_keluar.jam=elmt->jam_keluar.jam+1;
 		}
 	}
-	if(elmt->jenis_mobil==3){ // prosedure pengambilan waktu akhir ketika jenis mobil = C
+	if(elmt->jenis_mobil==3){ /* prosedure pengambilan waktu akhir ketika jenis mobil = C*/
 		elmt->jam_keluar.jam=elmt->jam_operasi.jam+1;
 		elmt->jam_keluar.menit=elmt->jam_operasi.menit+15;
 		elmt->jam_keluar.detik=elmt->jam_operasi.detik;
@@ -126,7 +125,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 			elmt->jam_keluar.jam=elmt->jam_keluar.jam+1;
 		}
 	}
-	if (elmt->jam_keluar.jam == 12){ // kondisi pengambilan waktu akhir ketika waktu akhir berada pada waktu istirahat pegawai
+	if (elmt->jam_keluar.jam == 12){ /* kondisi pengambilan waktu akhir ketika waktu akhir berada pada waktu istirahat pegawai*/
 		elmt->jam_keluar.jam=13;
 		elmt->jam_keluar.menit=elmt->jam_keluar.menit;
 		elmt->jam_keluar.detik=elmt->jam_keluar.detik;
@@ -141,9 +140,9 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], ch
 	}
 	(*Q).rear = elmt;
 	elmt = NULL;
-}//Nisrina dan Ummu
+} /*Nisrina dan Ummu*/
 
-//delete customer
+/*delete customer*/
 void delMobil(queueMobil *Q){
 	if(isEmpty(*Q) == 1){
 		printf("Queue Kosong\n");
@@ -153,24 +152,24 @@ void delMobil(queueMobil *Q){
 		elmt->p_mobil = NULL;
 		free(elmt);
 	}
-}//Kakak Tingkat
+}/*Kakak Tingkat*/
 
-//menampilkan isi Queue
+/*menampilkan isi Queue*/
 void printqueueMobil(queueMobil Q){
 	if(isEmpty(Q) == 1){
 		printf("Antrian Kosong");	
 	}else{
 		elmt = Q.front;
 		
-		printf("--");
+		printf(" ");
 		while(elmt != NULL){
-			printf("%2d:%2d:%2d(%s) ",elmt->jam_operasi.jam,elmt->jam_operasi.menit,elmt->jam_operasi.detik,elmt->nmor_polisi);
+			printf("%2d:%2d:%2d[%s]",elmt->jam_keluar.jam,elmt->jam_keluar.menit,elmt->jam_keluar.detik,elmt->nmor_polisi);
 			elmt = elmt->p_mobil;
+			printf(" << ");
 		}
-		printf("--");
 		
 	}
-}//Kakak Tingkat
+}/*Kakak Tingkat*/
 
 int countMobil(queueMobil Q){
 	int hasil = 0;
@@ -180,16 +179,16 @@ int countMobil(queueMobil Q){
 	}else{
 		elmt = Q.front;
 		
-		while(elmt != NULL){
+  		while(elmt != NULL){
 			hasil = hasil + 1;
 			elmt = elmt->p_mobil;
 		}
 	}
 	
-	return hasil;
-}//Ummu
+return hasil;
+}/*Ummu*/
 
-//cek antrian
+/*cek antrian*/
 int cekAntrian(queueMobil Q[]){
 	int jml_antrian, min, index, i;
 	
@@ -206,19 +205,19 @@ int cekAntrian(queueMobil Q[]){
 	}
 	
 	return index;
-}//Ummu
+}/*Ummu*/
 
-//tambah antrian
+/*tambah antrian*/
 void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 	int index, i, antrian;
-	nomor++;
 	char a[10];
 	int b;
 	bool valid = false;
 	int jam=0, menit=0, detik=0;
+	nomor++;	/*id mobil atau field key*/
 	
-	index = cekAntrian(Q);
-	antrian = countMobil(Q[index]);
+	/*index = cekAntrian(Q);*/
+	/*antrian = countMobil(Q[index]);*/
 	
 	do{
 		printf("\nMasukkan Jam Masuk (hh:mm:ss): ");
@@ -231,38 +230,40 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 			if(jam >= 9 && jam<16){
 				system("cls");
 				index = cekAntrian(Q);
-				printf("|============================================================================================|\n");
-				printf("|                                   Rincian Jenis Mobil                                      |\n");
-				printf("|============================================================================================|\n");
-				printf("| 1. mobil kecil : KIA Picanto, Daihatsu Ceria,                                  Rp. 25.000  |\n");
-				printf("|                  Suzuki Karimun, Toyota Yaris dll (30 menit)                               |\n");
-				printf("| 2. minibus     : Toyota Avanza, Honda Freed, Suzuki Ertiga, dll (45 menit)     Rp. 30.000  |\n");
-				printf("| 3. mobil besar : Metromini, Truk, dll (75 menit)                               Rp. 40.000  |\n");
-				printf("|============================================================================================|\n");
-				printf("   Input Nomor Polisi : "); fflush(stdin); scanf("%[^\n]", &a);
-				printf("   Input Jenis Mobil  : "); scanf("%d", &b);
-				printf("   No ID Mobil Anda   : %d\n", nomor);
-				printf("|============================================================================================|\n");
-				addMobil(index + 1,nomor,NULL,a,b,&Q[index],jam,menit,detik);
-				tmptcuci[index].p_tmptcuci = Q[index].front;
-				printf("|========================================Berhasil============================================|\n");
-				printf("|============================================================================================|\n\n");
-				printf("------------Antrian cuci------------\n");
-				printf("=====================================\n");
+				/*Q[index];*/
+					gotoxy(12,3);printf("|============================================================================================|\n");
+					gotoxy(12,4);printf("|                                   Rincian Jenis Mobil                                      |\n");
+					gotoxy(12,5);printf("|============================================================================================|\n");
+					gotoxy(12,6);printf("| 1. mobil kecil : KIA Picanto, Daihatsu Ceria,                                  Rp. 25.000  |\n");
+					gotoxy(12,7);printf("|                  Suzuki Karimun, Toyota Yaris dll (30 menit)                               |\n");
+					gotoxy(12,8);printf("| 2. minibus     : Toyota Avanza, Honda Freed, Suzuki Ertiga, dll (45 menit)     Rp. 30.000  |\n");
+					gotoxy(12,9);printf("| 3. mobil besar : Metromini, Truk, dll (75 menit)                               Rp. 40.000  |\n");
+					gotoxy(12,10);printf("|============================================================================================|\n");
+					gotoxy(12,11);printf("   Input Nomor Polisi : "); fflush(stdin); scanf("%[^\n]", &a);
+					gotoxy(12,12);printf("   Input Jenis Mobil  : "); scanf("%d", &b);
+					gotoxy(12,13);printf("   No ID Mobil Anda   : %d\n", nomor);
+					gotoxy(12,14);printf("|============================================================================================|\n");
+					addMobil(index + 1,nomor,NULL,a,b,&Q[index],jam,menit,detik);
+					tmptcuci[index].p_tmptcuci = Q[index].front;
+					gotoxy(12,15);printf("|========================================Berhasil============================================|\n");
+					gotoxy(12,16);printf("|============================================================================================|\n\n");
+					gotoxy(40,20);printf("------------Antrian cuci------------\n");
+					gotoxy(40,21);printf("=====================================\n");
 				i = 0;
 				while(i < 2){
-					printf("Tempat ke %d : ", i+1);
+					printf("|Tempat ke %d| : ", i+1);
 					printqueueMobil(Q[i]);
 					printf("\n");
 					i++;
 				}	
 			}else{
 				printf("MAAF TEMPAT TUTUP\nTerimakasih \n\n");
+				exit(0);
 			}
 			valid = true;
 		}
 	}while (valid==false);
-}//Nisrina dan Ummu
+}/*Nisrina dan Ummu*/
 
 int biayapakai(queueMobil *Q){
 	int harga;
@@ -274,7 +275,7 @@ int biayapakai(queueMobil *Q){
 		harga=40000; 
 	}
 	return harga;
-}//Nisrina dan Putri
+}/*Nisrina dan Putri*/
 
 void printStruk (queueMobil *Q){
 	int uang;
@@ -301,7 +302,7 @@ void printStruk (queueMobil *Q){
 	}else{
 		printf("Tidak ada kembalian\n\n");
 	}
-}//Nisrina dan Putri
+}/*Nisrina dan Putri*/
 
 void checkout(queueMobil *Q){
 	int id;
@@ -313,35 +314,35 @@ void checkout(queueMobil *Q){
 	while(elmt != NULL){
 		if (id==elmt->id_mobil){
 			found = true;
-			elmt->biaya = biayapakai(&Q);
-			printStruk(&Q);
-			delMobil(&Q);
+			elmt->biaya = biayapakai(Q);
+			printStruk(Q);
+			delMobil(Q);
 		}
 		elmt = elmt->p_mobil;
 	}
 	if(found==false){
-		printf("\nData Mobil tidak ditemukan\n");
-	}
-}//Nisrina,Putri,dan Ummu
+	printf("\nData Mobil tidak ditemukan\n");
+	}	
+}/*Nisrina,Putri,dan Ummu*/
 
-//transaksi
+/*transaksi*/
 void mainmenu(int *pilih){
-	printf("|===================================================================================|\n");
-	printf("|                      APLIKASI ANTRIAN CUCI MOBIL JTK                              |\n");
-	printf("|                   | Nisrina-058 | Putri-060 | Ummu-065 |                          |\n");
-	printf("|            Buka : 07.00-17.00 WIB, Istirahat : 12.00-13.00 WIB                    |\n");
-	printf("|===================================================================================|\n");
-	printf("|                     1. Masuk Antrian                                              |\n");
-	printf("|                     2. Checkout                                                   |\n");
-	printf("|                     3. Tampilkan Rekap                                            |\n");
-	printf("|                     4. Help                                                       |\n");
-	printf("|                     5. Exit                                                       |\n");
-	printf("|===================================================================================|\n");
-	printf("                      Masukan Pilihan : ");
+	gotoxy(17,11);printf("|===================================================================================|\n");
+	gotoxy(17,12);printf("|                      APLIKASI ANTRIAN CUCI MOBIL JTK                              |\n");
+	gotoxy(17,13);printf("|                        | Hilman-015 | Salman-028 |                                |\n");
+	gotoxy(17,14);printf("|            Buka : 09.00-16.00 WIB, Istirahat : 12.00-13.00 WIB                    |\n");
+	gotoxy(17,15);printf("|===================================================================================|\n");
+	gotoxy(17,16);printf("|                     1. Masuk Antrian                                              |\n");
+	gotoxy(17,17);printf("|                     2. Checkout                                                   |\n");
+	gotoxy(17,18);printf("|                     3. Tampilkan Rekap                                            |\n");
+	gotoxy(17,19);printf("|                     4. Help                                                       |\n");
+	gotoxy(17,20);printf("|                     5. Exit                                                       |\n");
+	gotoxy(17,21);printf("|===================================================================================|\n");
+	gotoxy(1,22);printf("                      Masukan Pilihan : ");
 	scanf("%d",&*pilih);	
-}//Nisrina
+}/*Nisrina*/
 
-void help(){//Menampilkan file berisi User Manual
+void help(){/*Menampilkan file berisi User Manual*/
 		
 	FILE *fp;
 	char ch;
@@ -357,11 +358,11 @@ void help(){//Menampilkan file berisi User Manual
     	}
 	}
     fclose(fp);
-}//Putri
+}/*Putri*/
 
 void rekap (){
 	FILE *f_rekap;
-	time_t t = time(NULL);           // pengambilan current date
+	time_t t = time(NULL);           /* pengambilan current date*/
 	struct tm *tm = localtime(&t);
 	
 	f_rekap = fopen ("rekap_mobil.dat", "ab");
@@ -373,13 +374,14 @@ void rekap (){
 		elmt->jam_operasi.jam,elmt->jam_operasi.menit,elmt->jam_operasi.detik,elmt->jam_keluar.jam,elmt->jam_keluar.menit,elmt->jam_keluar.detik,elmt->no_pel,tm->tm_mday,tm->tm_mon+1,tm->tm_year+1900);
     }
 	fclose(f_rekap);
-}//Nisrina
+}/*Nisrina*/
 
 void showrekap()
 {	
-    system("cls");		
 	FILE *f_rekap;
 	char cara[panjang];
+    system("cls");		
+
 	
 	if ((f_rekap = fopen("rekap_mobil.dat", "rb")) == NULL){
 		printf("File tidak dapat dibuka! \r\n");
@@ -394,5 +396,13 @@ void showrekap()
 	}
 	fclose(f_rekap);
 	system("pause");
-}//Nisrina
+}/*Nisrina*/
 
+void gotoxy(int x, int y) {
+    COORD coord;
+     
+    coord.X = x;
+    coord.Y = y;
+     
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
