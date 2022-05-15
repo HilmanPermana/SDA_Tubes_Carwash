@@ -4,7 +4,7 @@
 void createEmpty(queueMobil *Q){
 	(*Q).front = NULL;
 	(*Q).rear = NULL;
-}/*Kakak Tingkat*/
+}
 
 
 /*cek Queue kosong*/
@@ -16,7 +16,7 @@ int isEmpty(queueMobil Q){
 	} 
 	
 	return hasil;
-}/*Kakak Tingkat*/
+}
 
 nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, int jam,int menit,int detik){
 	
@@ -36,17 +36,11 @@ nd_mobil Alokasi(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[],
 	
 	return elmt;
 	
-}/*Hilman*/
+}
 
 /*insert customer*/
 void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], int jenis_mobil, queueMobil *Q, int jam,int menit,int detik){          	
 	data_mobil *waktutemp;   /* menambahkan pointer dengan nama waktu*/
-
-	/*if(jam <9){     //kondisi ketika tempat belum buka
-		elmt->jam_operasi.jam = 9;
-		elmt->jam_operasi.menit = 0;
-		elmt->jam_operasi.detik = 0;
-	} */
 	
 	/*Alokasi Dinamis*/
 	elmt = Alokasi(no_pel, id_mobil, p_mobil, nmor_polisi, jenis_mobil, jam, menit, detik);
@@ -140,7 +134,7 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], in
 	}
 	(*Q).rear = elmt;
 	elmt = NULL;
-} /*Nisrina dan Ummu*/
+} 
 
 /*delete customer*/
 void delMobil(queueMobil *Q){
@@ -152,7 +146,7 @@ void delMobil(queueMobil *Q){
 		elmt->p_mobil = NULL;
 		free(elmt);
 	}
-}/*Kakak Tingkat*/
+}
 
 /*menampilkan isi Queue*/
 void printqueueMobil(queueMobil Q){
@@ -169,7 +163,7 @@ void printqueueMobil(queueMobil Q){
 		}
 		
 	}
-}/*Kakak Tingkat*/
+}
 
 int countMobil(queueMobil Q){
 	int hasil = 0;
@@ -186,11 +180,12 @@ int countMobil(queueMobil Q){
 	}
 	
 return hasil;
-}/*Ummu*/
+}
 
 /*cek antrian*/
 int cekAntrian(queueMobil Q[]){
 	int jml_antrian, min, index, i;
+
 	
 	min = countMobil(Q[0]);
 	index = 0;
@@ -205,7 +200,9 @@ int cekAntrian(queueMobil Q[]){
 	}
 	
 	return index;
-}/*Ummu*/
+}
+
+
 
 /*tambah antrian*/
 void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
@@ -216,8 +213,6 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 	int jam=0, menit=0, detik=0;
 	nomor++;	/*id mobil atau field key*/
 	
-	/*index = cekAntrian(Q);*/
-	/*antrian = countMobil(Q[index]);*/
 	
 	do{
 		printf("\nMasukkan Jam Masuk (hh:mm:ss): ");
@@ -228,9 +223,9 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 		}
 		else{
 			if(jam >= 9 && jam<16){
+				
 				system("cls");
 				index = cekAntrian(Q);
-				/*Q[index];*/
 					gotoxy(12,3);printf("|============================================================================================|\n");
 					gotoxy(12,4);printf("|                                   Rincian Jenis Mobil                                      |\n");
 					gotoxy(12,5);printf("|============================================================================================|\n");
@@ -263,7 +258,7 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 			valid = true;
 		}
 	}while (valid==false);
-}/*Nisrina dan Ummu*/
+}
 
 int biayapakai(queueMobil *Q){
 	int harga;
@@ -275,7 +270,7 @@ int biayapakai(queueMobil *Q){
 		harga=40000; 
 	}
 	return harga;
-}/*Nisrina dan Putri*/
+}
 
 void printStruk (queueMobil *Q){
 	int uang;
@@ -302,28 +297,35 @@ void printStruk (queueMobil *Q){
 	}else{
 		printf("Tidak ada kembalian\n\n");
 	}
-}/*Nisrina dan Putri*/
+}
 
-void checkout(queueMobil *Q){
-	int id;
+void checkout(queueMobil Q[]){
+	int id,index;
 	bool found=false;
-	elmt = (*Q).front;
+	
 	printf("Masukkan Nomor ID Mobil: ");
 	scanf("%d",&id);
 	
-	while(elmt != NULL){
-		if (id==elmt->id_mobil){
-			found = true;
-			elmt->biaya = biayapakai(Q);
-			printStruk(Q);
-			delMobil(Q);
-		}
-		elmt = elmt->p_mobil;
+	if(id % 2 == 0){
+		elmt = Q[1].front;
+	} 
+	else{
+		elmt = Q[0].front;
 	}
-	if(found==false){
-	printf("\nData Mobil tidak ditemukan\n");
-	}	
-}/*Nisrina,Putri,dan Ummu*/
+	
+		while(elmt != NULL){
+			if (id==elmt->id_mobil){
+				found = true;
+				elmt->biaya = biayapakai(Q);
+				printStruk(Q);
+				delMobil(Q);
+			}
+			elmt = elmt->p_mobil;
+		}
+		if(found==false){
+		printf("\nData Mobil tidak ditemukan\n");
+		}
+}
 
 /*transaksi*/
 void mainmenu(int *pilih){
@@ -340,7 +342,7 @@ void mainmenu(int *pilih){
 	gotoxy(17,21);printf("|===================================================================================|\n");
 	gotoxy(1,22);printf("                      Masukan Pilihan : ");
 	scanf("%d",&*pilih);	
-}/*Nisrina*/
+}
 
 void help(){/*Menampilkan file berisi User Manual*/
 		
@@ -358,7 +360,7 @@ void help(){/*Menampilkan file berisi User Manual*/
     	}
 	}
     fclose(fp);
-}/*Putri*/
+}
 
 void rekap (){
 	FILE *f_rekap;
@@ -370,11 +372,11 @@ void rekap (){
         printf( "File failed to open." ) ; 
     } 
     else{
-		fprintf(f_rekap,"|     %7s      |     %d       |    %2d:%2d:%2d      |  %2d:%2d:%2d     |  %2d:%2d:%2d    |     %d        |   %2d/%2d/%4d      |\n",elmt->nmor_polisi,elmt->jenis_mobil,elmt->jam_masuk.jam,elmt->jam_masuk.menit,elmt->jam_masuk.detik,
+		fprintf(f_rekap,"|     %7s      |     %d       |     %d       |    %2d:%2d:%2d      |  %2d:%2d:%2d     |  %2d:%2d:%2d    |     %d        |   %2d/%2d/%4d      |\n",elmt->nmor_polisi,elmt->id_mobil,elmt->jenis_mobil,elmt->jam_masuk.jam,elmt->jam_masuk.menit,elmt->jam_masuk.detik,
 		elmt->jam_operasi.jam,elmt->jam_operasi.menit,elmt->jam_operasi.detik,elmt->jam_keluar.jam,elmt->jam_keluar.menit,elmt->jam_keluar.detik,elmt->no_pel,tm->tm_mday,tm->tm_mon+1,tm->tm_year+1900);
     }
 	fclose(f_rekap);
-}/*Nisrina*/
+}
 
 void showrekap()
 {	
@@ -387,16 +389,16 @@ void showrekap()
 		printf("File tidak dapat dibuka! \r\n");
 		exit(1);
 	}
-	printf("|=====================================================================================================================|\n");
-	printf("|   Nomor Polisi   | Jenis Mobil |  Jam kedatangan  |  Jam Operasi  |  Jam Keluar  | Tempat Cuci  | Tanggal Pencucian |\n");
-	printf("|=====================================================================================================================|\n");
+	printf("|====================================================================================================================================|\n");
+	printf("|   Nomor Polisi     |   ID Mobil   | Jenis Mobil |  Jam kedatangan  |  Jam Operasi  |  Jam Keluar  | Tempat Cuci  | Tanggal Pencucian |\n");
+	printf("|====================================================================================================================================|\n");
 	while((fgets(cara, panjang, f_rekap)) != NULL){
 		printf("%s\r", cara);
-		printf("|=====================================================================================================================|\n");
+		printf("|================================================================================================================================|\n");
 	}
 	fclose(f_rekap);
 	system("pause");
-}/*Nisrina*/
+}
 
 void gotoxy(int x, int y) {
     COORD coord;
