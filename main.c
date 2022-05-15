@@ -55,4 +55,4 @@ int main() {
 		}
 		getch();
 	}while(choice !=5);	
-}/*Nisrina dan Putri*/
+}
