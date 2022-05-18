@@ -187,7 +187,7 @@ int cekAntrian(queueMobil Q[]){
 	int jml_antrian, min, index, i;
 
 	
-	min = countMobil(Q[0]);
+	min = countMobil(Q[i]);
 	index = 0;
 	i = 1;
 	while(i < 2){
@@ -207,7 +207,7 @@ int cekAntrian(queueMobil Q[]){
 /*tambah antrian*/
 void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 	int index, i, antrian;
-	char a[10];
+	char a[12];
 	int b;
 	bool valid = false;
 	int jam=0, menit=0, detik=0;
@@ -308,9 +308,11 @@ void checkout(queueMobil Q[]){
 	
 	if(id % 2 == 0){
 		elmt = Q[1].front;
+		(*Q).front =  Q[1].front;
 	} 
 	else{
 		elmt = Q[0].front;
+		(*Q).front =  Q[0].front;
 	}
 	
 		while(elmt != NULL){
@@ -389,12 +391,12 @@ void showrekap()
 		printf("File tidak dapat dibuka! \r\n");
 		exit(1);
 	}
-	printf("|====================================================================================================================================|\n");
-	printf("|   Nomor Polisi     |   ID Mobil   | Jenis Mobil |  Jam kedatangan  |  Jam Operasi  |  Jam Keluar  | Tempat Cuci  | Tanggal Pencucian |\n");
-	printf("|====================================================================================================================================|\n");
+	printf("|==========================================================================================================================================|\n");
+	printf("|   Nomor Polisi     |   ID Mobil   | Jenis Mobil |  Jam kedatangan  |  Jam Operasi  |  Jam Keluar  | Tempat Cuci  | Tanggal Pencucian     |\n");
+	printf("|==========================================================================================================================================|\n");
 	while((fgets(cara, panjang, f_rekap)) != NULL){
 		printf("%s\r", cara);
-		printf("|================================================================================================================================|\n");
+		printf("|======================================================================================================================================|\n");
 	}
 	fclose(f_rekap);
 	system("pause");

@@ -25,7 +25,7 @@ typedef struct mobil{
 	waktu jam_keluar;
 	waktu jam_operasi;
 	char nm_pel;						
-	char nmor_polisi[10];				
+	char nmor_polisi[12];				
 	int jenis_mobil;
 	int biaya;
 	nd_mobil p_mobil;				
