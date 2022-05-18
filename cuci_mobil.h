@@ -1,7 +1,7 @@
 #ifndef cuci_mobil_H
 #define cuci_mobil_H
 #include <stdio.h>
-/*#include <malloc.h>*/
+#include <malloc.h>
 #include <string.h>
 #include <stdlib.h>
 #include <conio.h>

@@ -78,14 +78,15 @@ void addMobil(int no_pel, int id_mobil, nd_mobil p_mobil, char nmor_polisi[], in
 	   			printf("MAAF Tempat Sudah Tutup\n"); /* kondisi antrian waktu sudah melebihi batas pengerjaan*/
 			}
 		}
-		
 	}
-	else 	
-	if(jam>=12 && jam<13 && (*Q).front == NULL){  /* kondisi ketika antrian kosong dan waktu pegawai untuk beristirahat*/
+		
+	if(jam>=12 && jam<13 && ((*Q).front == NULL)){  /* kondisi ketika antrian kosong dan waktu pegawai untuk beristirahat*/
 		elmt->jam_operasi.jam = 13;
 		elmt->jam_operasi.menit = 00;
 		elmt->jam_operasi.detik = 00;
-		printf ("\nMaaf Kami Sedang Istirahat\nHarap Tunggu Sebentar\nMobil Anda akan kami cuci pada pukul %d:%d:%d\n", elmt->jam_operasi.jam,elmt->jam_operasi.menit,elmt->jam_operasi.detik);
+		gotoxy(17,16); printf ("Maaf Kami Sedang Istirahat");
+		gotoxy(17,17); printf("Harap Tunggu Sebentar");
+		gotoxy(17,18); printf("Mobil Anda akan kami cuci pada pukul %d:%d:%d\n", elmt->jam_operasi.jam,elmt->jam_operasi.menit,elmt->jam_operasi.detik);
 	}else{
 		elmt->jam_operasi.jam = jam;
 		elmt->jam_operasi.menit = menit;
@@ -215,11 +216,11 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 	
 	
 	do{
-		printf("\nMasukkan Jam Masuk (hh:mm:ss): ");
+		gotoxy(17,25); printf("Waktu Kedatangan Mobil (hh:mm:ss): ");
 		scanf("%2d:%2d:%2d", &jam,&menit,&detik);
 		if(jam>23|| menit>59 || detik>59 || jam<0 || menit<0 || detik<0){
 			valid  = false;
-			printf("\nWaktu tidak valid, silahkan ulangi lagi\n");	
+		gotoxy(17,25); printf("\nWaktu tidak valid, silahkan ulangi lagi\n");	
 		}
 		else{
 			if(jam >= 9 && jam<16){
@@ -237,13 +238,13 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 					gotoxy(12,11);printf("   Input Nomor Polisi : "); fflush(stdin); scanf("%[^\n]", &a);
 					gotoxy(12,12);printf("   Input Jenis Mobil  : "); scanf("%d", &b);
 					gotoxy(12,13);printf("   No ID Mobil Anda   : %d\n", nomor);
-					gotoxy(12,14);printf("|============================================================================================|\n");
+					gotoxy(12,19);printf("|============================================================================================|\n");
 					addMobil(index + 1,nomor,NULL,a,b,&Q[index],jam,menit,detik);
 					tmptcuci[index].p_tmptcuci = Q[index].front;
-					gotoxy(12,15);printf("|========================================Berhasil============================================|\n");
-					gotoxy(12,16);printf("|============================================================================================|\n\n");
-					gotoxy(40,20);printf("------------Antrian cuci------------\n");
-					gotoxy(40,21);printf("=====================================\n");
+					gotoxy(12,20);printf("|========================================Berhasil============================================|\n");
+					gotoxy(12,21);printf("|============================================================================================|\n\n");
+					gotoxy(40,22);printf("------------Antrian cuci------------\n");
+					gotoxy(40,23);printf("=====================================\n");
 				i = 0;
 				while(i < 2){
 					printf("|Tempat ke %d| : ", i+1);
@@ -252,7 +253,7 @@ void addAntrian(queueMobil Q[], data_tmptcuci tmptcuci[]){
 					i++;
 				}	
 			}else{
-				printf("MAAF TEMPAT TUTUP\nTerimakasih \n\n");
+			gotoxy(17,28); printf("MAAF TEMPAT TUTUP Terimakasih \n\n");
 				exit(0);
 			}
 			valid = true;
@@ -276,14 +277,14 @@ void printStruk (queueMobil *Q){
 	int uang;
 	bool valid=false;
 	
-	printf("\nNomor Polisi\t: %s\n", elmt->nmor_polisi);
-	printf("Jenis Mobil\t: %d\n",elmt->jenis_mobil);
-	printf("Tempat Cuci\t: %d\n",elmt->no_pel);
-	printf("Jam Masuk\t: %d:%d:%d\n",elmt->jam_masuk.jam,elmt->jam_masuk.menit,elmt->jam_masuk.detik);
-	printf("Jam Keluar\t: %d:%d:%d\n",elmt->jam_keluar.jam,elmt->jam_keluar.menit,elmt->jam_keluar.detik);
-	printf("Biaya Akhir\t: %d",elmt->biaya);
+	gotoxy(17,30);printf("Nomor Polisi\t: %s\n", elmt->nmor_polisi);
+	gotoxy(17,31);printf("Jenis Mobil\t: %d\n",elmt->jenis_mobil);
+	gotoxy(17,32);printf("Tempat Cuci\t: %d\n",elmt->no_pel);
+	gotoxy(17,33);printf("Jam Masuk\t: %d:%d:%d\n",elmt->jam_masuk.jam,elmt->jam_masuk.menit,elmt->jam_masuk.detik);
+	gotoxy(17,34);printf("Jam Keluar\t: %d:%d:%d\n",elmt->jam_keluar.jam,elmt->jam_keluar.menit,elmt->jam_keluar.detik);
+	gotoxy(17,35);printf("Biaya Akhir\t: %d",elmt->biaya);
 	do{
-		printf("\nMasukkan Uang yang Dibayarkan: ");
+		gotoxy(17,38);printf("\nMasukkan Uang yang Dibayarkan: ");
 		scanf("%d", &uang);
 		printf("\n");
 		if(uang > elmt->biaya || uang==elmt->biaya){
@@ -303,18 +304,10 @@ void checkout(queueMobil Q[]){
 	int id,index;
 	bool found=false;
 	
-	printf("Masukkan Nomor ID Mobil: ");
+	gotoxy(17,25); printf("Masukkan Nomor ID Mobil: ");
 	scanf("%d",&id);
 	
-	if(id % 2 == 0){
-		elmt = Q[1].front;
-		(*Q).front =  Q[1].front;
-	} 
-	else{
-		elmt = Q[0].front;
-		(*Q).front =  Q[0].front;
-	}
-	
+		elmt = (*Q).front;
 		while(elmt != NULL){
 			if (id==elmt->id_mobil){
 				found = true;
@@ -342,7 +335,7 @@ void mainmenu(int *pilih){
 	gotoxy(17,19);printf("|                     4. Help                                                       |\n");
 	gotoxy(17,20);printf("|                     5. Exit                                                       |\n");
 	gotoxy(17,21);printf("|===================================================================================|\n");
-	gotoxy(1,22);printf("                      Masukan Pilihan : ");
+	gotoxy(17,22);printf("                      Masukan Pilihan : ");
 	scanf("%d",&*pilih);	
 }
 

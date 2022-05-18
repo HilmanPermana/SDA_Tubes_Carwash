@@ -1,6 +1,6 @@
 #include "cuci_mobil.h"
 int main() {
-	int choice;
+	int choice,cek;
 
 	queueMobil Q[2];
 	data_tmptcuci tmptcuci[2];
@@ -34,7 +34,13 @@ int main() {
 				break;
 			}
 			case 2:{
-				checkout(Q);
+				gotoxy(17,24); printf("Pilih Tempat Cuci : ");
+				scanf("%d",&cek);
+				if(cek == 1){
+					checkout(&Q[0]);
+				}else{
+					checkout(&Q[1]);
+				}
 				break;
 			}
 			case 3:{
