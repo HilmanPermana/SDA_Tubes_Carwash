@@ -23,6 +23,7 @@ int main() {
 		while(i < 2){
 			printf("|Tempat ke %d| : ", i+1);
 			printqueueMobil(Q[i]);
+
 			printf("\n");
 			i++;
 		}
